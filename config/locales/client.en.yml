@@ -1,0 +1,13 @@
+en:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          TODO_discourse_group_aggregations: "Plugin Name"
+  js:
+    groups:
+      save_aggregation_warning: "<b>Warning</b>: Saving an <b>Aggregated Group <svg class=\"fa d-icon d-icon-bullseye svg-icon prefix-icon svg-string\" xmlns=\"http://www.w3.org/2000/svg\"><use href=\"#bullseye\"></use></svg></b> will overwrite all existing memberships to match the selected aggregated groups, meaning any previous memberships not included in the aggregation will be lost. <br><br>Do you want to continue?"
+      save_remove_aggregations_warning: "<b>Warning</b>: Removing an <b>Aggregated Group <svg class=\"fa d-icon d-icon-bullseye svg-icon prefix-icon svg-string\" xmlns=\"http://www.w3.org/2000/svg\"><use href=\"#bullseye\"></use></svg></b> will remove all existing memberships from the current group, meaning any previous memberships included in the aggregation will be lost. <br><br>Do you want to continue?"
+      source_group: Source groups
+    discourse_discourse_group_aggregations:
+      placeholder: placeholder
