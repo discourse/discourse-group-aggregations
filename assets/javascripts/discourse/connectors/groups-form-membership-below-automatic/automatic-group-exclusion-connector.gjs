@@ -25,7 +25,7 @@ export default class AutomaticGroupExclusionConnector extends Component {
       : this.groupsNewController;
     this.groupModel = this.controller?.model;
 
-    if (this.groupManageController.model.aggregated_children?.length > 0) {
+    if ((this.groupModel?.aggregated_children?.length || 0) > 0) {
       this.groupManageController.model.hadAggregatedChildren = true;
     }
 
