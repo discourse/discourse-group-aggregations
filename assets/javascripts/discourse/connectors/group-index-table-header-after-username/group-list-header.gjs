@@ -2,16 +2,16 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { inject as service } from "@ember/service";
 import TableHeaderToggle from "discourse/components/table-header-toggle";
+import { getOwnerWithFallback } from "discourse-common/lib/get-owner";
 
 export default class GroupListHeader extends Component {
   @service site;
   @service router;
 
   @tracked group = this.args.outletArgs.group;
-  @tracked order = this.args.outletArgs.order;
-  @tracked asc = this.args.outletArgs.asc;
 
   aggregatedChildrenCount = this.group?.aggregated_children?.length || 0;
+  _groupIndexController = null;
 
   constructor() {
     super(...arguments);
@@ -27,6 +27,24 @@ export default class GroupListHeader extends Component {
 
     table.classList.add("aggregate-group-members--can-manage");
     table.classList.remove("group-members--can-manage");
+    this._groupIndexController = getOwnerWithFallback(this).lookup(
+      "controller:group-index"
+    );
+  }
+  get order() {
+    return this.args.outletArgs.order;
+  }
+
+  set order(order) {
+    this._groupIndexController.set("order", order);
+  }
+
+  get asc() {
+    return this.args.outletArgs.asc;
+  }
+
+  set asc(asc) {
+    this._groupIndexController.set("asc", asc);
   }
 
   get isAggregate() {
@@ -35,6 +53,7 @@ export default class GroupListHeader extends Component {
 
   <template>
     {{#if this.isAggregate}}
+      {{log this.order}}
       <TableHeaderToggle
         @order={{this.order}}
         @asc={{this.asc}}
