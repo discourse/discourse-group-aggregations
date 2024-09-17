@@ -53,7 +53,6 @@ export default class GroupListHeader extends Component {
 
   <template>
     {{#if this.isAggregate}}
-      {{log this.order}}
       <TableHeaderToggle
         @order={{this.order}}
         @asc={{this.asc}}
