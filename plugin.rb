@@ -17,7 +17,7 @@ after_initialize do
   require_relative "app/jobs/regular/aggregate_group_memberships"
   require_relative "lib/discourse_group_aggregations/group_aggregator"
 
-  reloadable_patch do
+  # reloadable_patch do
     Group.prepend DiscourseGroupAggregations::GroupExtension
 
     add_model_callback(Group, :after_save) do
@@ -94,25 +94,24 @@ after_initialize do
       include_condition: -> { scope.is_admin? },
     ) { object.is_aggregated_group? }
 
-    add_to_serializer(:site, :groups, include_condition: -> { scope.is_admin? }) do
-      cache_anon_fragment("group_names") do
-        object
-          .groups
-          .order(:name)
-          .select(:id, :name, :flair_icon, :flair_upload_id, :flair_bg_color, :flair_color)
-          .map do |g|
-            {
-              id: g.id,
-              name: g.name,
-              flair_url: g.flair_url,
-              flair_bg_color: g.flair_bg_color,
-              flair_color: g.flair_color,
-              is_aggregated_group: g.is_aggregated_group?,
-            }
-          end
-          .as_json
-      end
-    end
+    # add_to_serializer(:site, :groups, include_condition: -> { scope.is_admin? }) do
+    #   # cache_anon_fragment("group_names") do
+    #     object
+    #       .groups
+    #       .order(:name)
+    #       .select(:id, :name, :flair_icon, :flair_upload_id, :flair_bg_color, :flair_color)
+    #       .map do |g|
+    #         {
+    #           id: g.id,
+    #           name: g.name,
+    #           flair_url: g.flair_url,
+    #           flair_bg_color: g.flair_bg_color,
+    #           flair_color: g.flair_color,
+    #         }
+    #       end
+    #       .as_json
+    #   # end
+    # end
 
     add_to_serializer(:group_show, :groups_to_exclude, include_condition: -> { scope.is_admin? }) do
       object.custom_fields["groups_to_exclude"]&.split("|")&.map(&:to_i)
@@ -129,5 +128,5 @@ after_initialize do
       :domains_to_exclude_from_group,
       include_condition: -> { scope.is_admin? },
     ) { object.custom_fields["domains_to_exclude_from_group"]&.split("|") }
-  end
+  # end
 end
