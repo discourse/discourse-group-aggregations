@@ -93,26 +93,7 @@ after_initialize do
       :is_aggregated_group,
       include_condition: -> { scope.is_admin? },
     ) { object.is_aggregated_group? }
-
-    add_to_serializer(:groups, :groups, include_condition: -> { scope.is_admin? }) do
-      # cache_anon_fragment("group_names") do
-        object
-          .groups
-          .order(:name)
-          .select(:id, :name, :flair_icon, :flair_upload_id, :flair_bg_color, :flair_color)
-          .map do |g|
-            {
-              id: g.id,
-              name: g.name,
-              flair_url: g.flair_url,
-              flair_bg_color: g.flair_bg_color,
-              flair_color: g.flair_color,
-            }
-          end
-          .as_json
-      # end
-    end
-
+  
     add_to_serializer(:group_show, :groups_to_exclude, include_condition: -> { scope.is_admin? }) do
       object.custom_fields["groups_to_exclude"]&.split("|")&.map(&:to_i)
     end
