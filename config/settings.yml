@@ -1,0 +1,4 @@
+TODO_discourse_group_aggregations:
+  discourse_group_aggregations_enabled:
+    default: false
+    client: true
